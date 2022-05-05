@@ -1,40 +1,45 @@
 import * as React from 'react'
-import { useForm } from 'react-hook-form'
+import Button from '@mui/material/Button'
+import Fab from '@mui/material/Fab'
+import SvgIcon from '@mui/material/SvgIcon'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-type ImagesFormField = {
-  images?: FileList
+type Props = {
+  fab?: boolean
+  onChange: (values: Array<string>) => void
 }
-const ImageUploader = () => {
-  const { register, watch, handleSubmit } = useForm<ImagesFormField>()
-  const uploaded = watch('images')
-  const [images, setImages] = React.useState<Array<string>>([])
-
-  React.useEffect(() => {
-    const subscription = watch((value, test) => console.log(value, test))
-
-    return () => subscription.unsubscribe()
-  })
-
-  React.useEffect(() => {
-    console.log(uploaded)
-    if (uploaded) {
-      setImages((prev) => [
-        ...prev,
-        ...Array.from(uploaded).map((item) => URL.createObjectURL(item)),
-      ])
+const ImageUploader: React.FC<Props> = ({ fab, onChange }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      onChange(Array.from(e.target.files).map((item) => URL.createObjectURL(item)))
     }
-  }, [uploaded])
-
-  const onSubmit = (data: unknown) => console.log(data)
+  }
 
   return (
     <>
-      {images.map((image) => (
-        <div key={image}>{image}</div>
-      ))}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register('images')} type="file" accept="image/*" multiple />
-      </form>
+      <label htmlFor="upload-image">
+        <input
+          id="upload-image"
+          name="upload"
+          onChange={handleChange}
+          type="file"
+          accept="image/*"
+          multiple
+          hidden
+        />
+        {fab ? (
+          <Fab component="span" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+            <SvgIcon>
+              <FontAwesomeIcon icon={faPlus} />
+            </SvgIcon>
+          </Fab>
+        ) : (
+          <Button variant="outlined" component="span">
+            Upload Image
+          </Button>
+        )}
+      </label>
     </>
   )
 }

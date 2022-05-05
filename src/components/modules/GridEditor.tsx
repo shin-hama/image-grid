@@ -1,5 +1,60 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
-const GridEditor = () => {
-  return <></>
+import styles from './page.module.scss'
+import GridEditorHeader from './GridEditorHeader'
+
+const sliceArray = <T extends unknown>(arr: Array<T>, length: number): Array<Array<T>> => {
+  const result = []
+  let index = 0
+  while (index < arr.length) {
+    result.push(arr.slice(index, index + length))
+    index += length
+  }
+
+  return result
 }
+
+export type Matrix = {
+  col: number
+  row: number
+}
+type Props = {
+  contents?: Array<React.ReactNode>
+}
+const GridEditor: React.FC<Props> = ({ contents }) => {
+  const [matrix, setMatrix] = React.useState<Matrix>({ col: 2, row: 2 })
+
+  const handleEditMatrix = React.useCallback((newMatrix: Matrix) => {
+    setMatrix(newMatrix)
+  }, [])
+
+  return (
+    <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
+      <Grid item xs={12}>
+        <GridEditorHeader matrix={matrix} onChangeMatrix={handleEditMatrix} />
+      </Grid>
+      <Grid item xs={12} display="flex" justifyContent="center">
+        {contents &&
+          sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
+            <Box component="section" className={styles.sheet}>
+              <Grid container sx={{ height: '100%' }}>
+                {sliced.map((content) => (
+                  <Grid
+                    item
+                    xs={12 / matrix.col}
+                    sx={{ height: `${Math.floor(100 / matrix.row)}%` }}
+                  >
+                    {content}
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          ))}
+      </Grid>
+    </Grid>
+  )
+}
+
+export default GridEditor
