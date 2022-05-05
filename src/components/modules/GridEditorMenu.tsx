@@ -3,14 +3,23 @@ import Divider from '@mui/material/Divider'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
+import { useImages } from 'contexts/ImagesProvider'
+
 type Props = MenuProps & {
   onPrint: () => void
 }
 const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
+  const { actions } = useImages()
+
   const handlePrint = (e: React.MouseEvent) => {
     onPrint()
     props.onClose?.(e, 'backdropClick')
   }
+
+  const handleClear = () => {
+    actions.clear()
+  }
+
   return (
     <Menu
       id="plan-menu"
@@ -23,7 +32,7 @@ const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
       <MenuItem>画像を追加</MenuItem>
       <MenuItem>サイズ変更</MenuItem>
       <Divider />
-      <MenuItem>画像をすべて削除</MenuItem>
+      <MenuItem onClick={handleClear}>画像をすべて削除</MenuItem>
     </Menu>
   )
 }

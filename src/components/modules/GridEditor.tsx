@@ -37,7 +37,12 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
   }, [])
 
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{ height: '100%', background: '#eee' }}
+    >
       <Grid item xs={12}>
         <GridEditorHeader matrix={matrix} onChangeMatrix={handleEditMatrix} onPrint={handlePrint} />
       </Grid>
