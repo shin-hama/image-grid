@@ -3,8 +3,10 @@ import Divider from '@mui/material/Divider'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
-type Props = MenuProps & {}
-const GridEditorMenu: React.FC<Props> = (props) => {
+type Props = MenuProps & {
+  onPrint: () => void
+}
+const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
   return (
     <Menu
       id="plan-menu"
@@ -13,10 +15,13 @@ const GridEditorMenu: React.FC<Props> = (props) => {
         'aria-labelledby': 'basic-button',
       }}
     >
-      <MenuItem>印刷</MenuItem>
+      <MenuItem onClick={onPrint}>印刷</MenuItem>
       <MenuItem>画像を追加</MenuItem>
+      <MenuItem>サイズ変更</MenuItem>
       <Divider />
       <MenuItem>画像をすべて削除</MenuItem>
     </Menu>
   )
 }
+
+export default GridEditorMenu

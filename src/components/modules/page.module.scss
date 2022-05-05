@@ -1,4 +1,5 @@
 .sheet {
+
     width: 210mm;
     height: 296mm;
     /* 1mm余裕をもたせる */
@@ -16,5 +17,6 @@
         /* 背景を白く */
         box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
         /* ドロップシャドウ */
+        margin-bottom: 16px;
     }
 }

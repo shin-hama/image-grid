@@ -12,18 +12,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { Matrix } from './GridEditor'
+import GridEditorMenu from './GridEditorMenu'
 
 type Props = {
   matrix: Matrix
   onChangeMatrix: (newMatrix: Matrix) => void
+  onPrint: () => void
 }
-const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix }) => {
+const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, onPrint }) => {
+  const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
+
   const handleEditMatrix = (direction: keyof Matrix, value: number) => () => {
     console.log(direction, value)
     if (value < 1 || value > 4) {
       return
     }
     onChangeMatrix({ ...matrix, [direction]: value })
+  }
+
+  const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setAnchor(e.currentTarget)
   }
 
   return (
@@ -61,12 +69,18 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix }) => {
             </IconButton>
           </Box>
         </Stack>
-        <IconButton>
+        <IconButton onClick={handleOpenMenu}>
           <SvgIcon>
             <FontAwesomeIcon icon={faEllipsisVertical} />
           </SvgIcon>
         </IconButton>
       </Stack>
+      <GridEditorMenu
+        open={Boolean(anchor)}
+        anchorEl={anchor}
+        onClose={() => setAnchor(null)}
+        onPrint={onPrint}
+      />
     </>
   )
 }
