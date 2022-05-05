@@ -7,6 +7,10 @@ type Props = MenuProps & {
   onPrint: () => void
 }
 const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
+  const handlePrint = (e: React.MouseEvent) => {
+    onPrint()
+    props.onClose?.(e, 'backdropClick')
+  }
   return (
     <Menu
       id="plan-menu"
@@ -15,7 +19,7 @@ const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
         'aria-labelledby': 'basic-button',
       }}
     >
-      <MenuItem onClick={onPrint}>印刷</MenuItem>
+      <MenuItem onClick={handlePrint}>印刷</MenuItem>
       <MenuItem>画像を追加</MenuItem>
       <MenuItem>サイズ変更</MenuItem>
       <Divider />

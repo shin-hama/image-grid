@@ -41,11 +41,11 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
       <Grid item xs={12}>
         <GridEditorHeader matrix={matrix} onChangeMatrix={handleEditMatrix} onPrint={handlePrint} />
       </Grid>
-      <Grid ref={ref} item xs={12}>
-        <Stack alignItems="center">
+      <Grid item xs={12}>
+        <Stack ref={ref} alignItems="center" className={styles.container}>
           {contents &&
             sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
-              <Box component="section" className={styles.sheet}>
+              <Box component="section" className={styles.sheet} display="block">
                 <Grid container sx={{ height: '100%' }}>
                   {sliced.map((content) => (
                     <Grid

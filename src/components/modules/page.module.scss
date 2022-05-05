@@ -1,7 +1,14 @@
-.sheet {
+@page {
+    size: A4;
+    margin: 0;
+}
 
-    width: 210mm;
-    height: 296mm;
+.sheet {
+    width: calc(100 / 21 * 21vw);
+    height: calc(100 / 21* 29.6vw);
+    max-width: 210mm;
+    max-height: 296mm;
+    aspect-ratio: 21 / 29.6;
     /* 1mm余裕をもたせる */
     page-break-after: always;
 }
@@ -13,10 +20,16 @@
     }
 
     .sheet {
-        background: white;
+        width: calc(100 / 24 * 21vw);
+        height: calc(100 / 24* 29.6vw);
         /* 背景を白く */
-        box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
+        background: white;
         /* ドロップシャドウ */
+        box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
         margin-bottom: 16px;
+    }
+    .container {
+        margin-left: 16px;
+        margin-right: 16px;
     }
 }
