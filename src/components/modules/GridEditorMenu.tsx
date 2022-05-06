@@ -29,7 +29,6 @@ const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
       }}
     >
       <MenuItem onClick={handlePrint}>印刷</MenuItem>
-      <MenuItem>画像を追加</MenuItem>
       <MenuItem>サイズ変更</MenuItem>
       <Divider />
       <MenuItem onClick={handleClear}>画像をすべて削除</MenuItem>

@@ -6,13 +6,15 @@
 .sheet {
     display: block;
     width: 210mm;
+    /* 1mm余裕をもたせる */
     height: 296mm;
     max-width: 210mm;
     max-height: 296mm;
     aspect-ratio: 21 / 29.6;
-    /* 1mm余裕をもたせる */
     page-break-after: always;
     overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .sheet_safari {
@@ -28,6 +30,7 @@ html body {
 @media print {
     html body {
         background: white;
+        margin: 0;
     }
 
     .no_print {
