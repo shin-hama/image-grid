@@ -5,6 +5,8 @@ import SvgIcon from '@mui/material/SvgIcon'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
+import styles from './page.module.scss'
+
 type Props = {
   fab?: boolean
   onChange: (values: Array<string>) => void
@@ -17,30 +19,28 @@ const ImageUploader: React.FC<Props> = ({ fab, onChange }) => {
   }
 
   return (
-    <>
-      <label htmlFor="upload-image">
-        <input
-          id="upload-image"
-          name="upload"
-          onChange={handleChange}
-          type="file"
-          accept="image/*"
-          multiple
-          hidden
-        />
-        {fab ? (
-          <Fab component="span" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
-            <SvgIcon>
-              <FontAwesomeIcon icon={faPlus} />
-            </SvgIcon>
-          </Fab>
-        ) : (
-          <Button variant="outlined" component="span">
-            Upload Image
-          </Button>
-        )}
-      </label>
-    </>
+    <label htmlFor="upload-image" className={styles.no_print}>
+      <input
+        id="upload-image"
+        name="upload"
+        onChange={handleChange}
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+      />
+      {fab ? (
+        <Fab component="span" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+          <SvgIcon>
+            <FontAwesomeIcon icon={faPlus} />
+          </SvgIcon>
+        </Fab>
+      ) : (
+        <Button variant="outlined" component="span">
+          Upload Image
+        </Button>
+      )}
+    </label>
   )
 }
 

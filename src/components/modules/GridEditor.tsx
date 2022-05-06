@@ -43,7 +43,7 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
       alignItems="center"
       sx={{ height: '100%', background: '#eee' }}
     >
-      <Grid item xs={12}>
+      <Grid item xs={12} className={styles.no_print}>
         <GridEditorHeader matrix={matrix} onChangeMatrix={handleEditMatrix} onPrint={handlePrint} />
       </Grid>
       <Grid item xs={12}>

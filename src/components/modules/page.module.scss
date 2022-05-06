@@ -13,6 +13,12 @@
     page-break-after: always;
 }
 
+@media print {
+    .no_print {
+        display: none;
+    }
+}
+
 /* プレビュー用のスタイル */
 @media screen {
     .sheet {
