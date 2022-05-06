@@ -36,6 +36,7 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
     setMatrix(newMatrix)
   }, [])
 
+  const isSafari = Object.keys(window).includes('safari')
   return (
     <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
       <Grid item xs={12} className={styles.no_print}>
@@ -45,7 +46,11 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
         <Stack ref={ref} alignItems="center" className={styles.container}>
           {contents &&
             sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
-              <Box component="section" className={styles.sheet} display="block">
+              <Box
+                component="section"
+                className={isSafari ? styles.sheet_safari : styles.sheet}
+                display="block"
+              >
                 <Grid container sx={{ height: '100%' }}>
                   {sliced.map((content) => (
                     <Grid
