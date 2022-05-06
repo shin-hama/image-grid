@@ -1,5 +1,5 @@
 @page {
-    size: A4;
+    size: A4 portrait;
     margin: 0;
 }
 
@@ -13,7 +13,15 @@
     page-break-after: always;
 }
 
+html body {
+    background: #eee;
+}
+
 @media print {
+    html body {
+        background: white;
+    }
+
     .no_print {
         display: none;
     }
