@@ -62,21 +62,22 @@ const EditorSpeedDial: React.FC<Props> = ({ onPrint }) => {
     [handleClear, onPrint]
   )
   return (
-    <SpeedDial
-      ariaLabel="SpeedDial tooltip example"
-      sx={{ position: 'fixed', bottom: 16, right: 16 }}
-      icon={<FontAwesomeIcon icon={faEllipsisV} />}
-    >
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-          tooltipOpen
-          onClick={action.action}
-        />
-      ))}
-    </SpeedDial>
+    <Box sx={{ position: 'fixed', bottom: 16, right: 16, printDisplay: 'none' }}>
+      <SpeedDial
+        ariaLabel="SpeedDial tooltip example"
+        icon={<FontAwesomeIcon icon={faEllipsisV} />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={action.action}
+          />
+        ))}
+      </SpeedDial>
+    </Box>
   )
 }
 

@@ -9,20 +9,6 @@
     user-select: none;
 }
 
-.sheet {
-    display: block;
-    width: 210mm;
-    /* 1mm余裕をもたせる */
-    height: 296mm;
-    max-width: 210mm;
-    max-height: 296mm;
-    aspect-ratio: 21 / 29.6;
-    page-break-after: always;
-    overflow: hidden;
-    box-sizing: border-box;
-    position: relative;
-}
-
 html body {
     background: #eee;
     position: static;
@@ -30,24 +16,11 @@ html body {
 
 @media print {
     html body {
-        background: white;
+        background: black;
         margin: 0;
     }
 
     .no_print {
         display: none;
-    }
-}
-
-/* プレビュー用のスタイル */
-@media screen {
-    .sheet {
-        width: calc(100 / 24 * 21vw);
-        height: calc(100 / 24* 29.6vw);
-        /* 背景を白く */
-        background: white;
-        /* ドロップシャドウ */
-        box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
-        margin-bottom: 16px;
     }
 }
