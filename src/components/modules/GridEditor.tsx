@@ -101,7 +101,7 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
                         key={`${i % matrix.col}-${Math.floor(i / matrix.row)}`}
                         item
                         xs={12 / matrix.col}
-                        sx={{ p: 2, height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto' }}
+                        sx={{ height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto', p: 1 }}
                       >
                         {content}
                       </Grid>
