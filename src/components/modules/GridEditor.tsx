@@ -22,6 +22,7 @@ const Sheet = styled('section')(
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
+  background: transparent;
 
   /* プレビュー用のスタイル */
   @media screen {
@@ -69,7 +70,7 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
 
   return (
     <>
-      <Grid container justifyContent="center" alignItems="center">
+      <Grid container justifyContent="center" alignItems="center" spacing={1} py={2}>
         <Grid item xs={12} className={styles.no_print}>
           <GridEditorHeader
             matrix={matrix}

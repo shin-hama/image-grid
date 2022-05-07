@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
 import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
 import SvgIcon from '@mui/material/SvgIcon'
@@ -40,6 +41,8 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, ratio, onCh
     console.log(val)
     if (val && val > 0) {
       onChangeRatio(val)
+    } else {
+      onChangeRatio(0)
     }
   }
 
@@ -51,42 +54,40 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, ratio, onCh
             <FontAwesomeIcon icon={faBorderAll} />
           </SvgIcon>
         </IconButton>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ display: open === 'grid' ? 'flex' : 'none' }}
-        >
-          <Box>
-            Column
-            <IconButton onClick={handleEditMatrix('col', matrix.col - 1)}>
-              <SvgIcon>
-                <FontAwesomeIcon icon={faCaretLeft} />
-              </SvgIcon>
-            </IconButton>
-            {matrix.col}
-            <IconButton onClick={handleEditMatrix('col', matrix.col + 1)}>
-              <SvgIcon>
-                <FontAwesomeIcon icon={faCaretRight} />
-              </SvgIcon>
-            </IconButton>
-          </Box>
-          <FontAwesomeIcon icon={faSlash} rotation={90} />
-          <Box pl={1}>
-            Row
-            <IconButton onClick={handleEditMatrix('row', matrix.row - 1)}>
-              <SvgIcon>
-                <FontAwesomeIcon icon={faCaretLeft} />
-              </SvgIcon>
-            </IconButton>
-            {matrix.row}
-            <IconButton onClick={handleEditMatrix('row', matrix.row + 1)}>
-              <SvgIcon>
-                <FontAwesomeIcon icon={faCaretRight} />
-              </SvgIcon>
-            </IconButton>
-          </Box>
-        </Stack>
+        <Collapse in={open === 'grid'} orientation="horizontal">
+          <Stack direction="row" alignItems="center" justifyContent="center">
+            <Stack direction="row" alignItems="center">
+              <Typography>Column</Typography>
+              <IconButton onClick={handleEditMatrix('col', matrix.col - 1)}>
+                <SvgIcon>
+                  <FontAwesomeIcon icon={faCaretLeft} />
+                </SvgIcon>
+              </IconButton>
+              {matrix.col}
+              <IconButton onClick={handleEditMatrix('col', matrix.col + 1)}>
+                <SvgIcon>
+                  <FontAwesomeIcon icon={faCaretRight} />
+                </SvgIcon>
+              </IconButton>
+            </Stack>
+            <FontAwesomeIcon icon={faSlash} rotation={90} />
+            <Stack direction="row" alignItems="center" pl={1}>
+              <Typography>Row</Typography>
+              <IconButton onClick={handleEditMatrix('row', matrix.row - 1)}>
+                <SvgIcon>
+                  <FontAwesomeIcon icon={faCaretLeft} />
+                </SvgIcon>
+              </IconButton>
+              {matrix.row}
+              <IconButton onClick={handleEditMatrix('row', matrix.row + 1)}>
+                <SvgIcon>
+                  <FontAwesomeIcon icon={faCaretRight} />
+                </SvgIcon>
+              </IconButton>
+            </Stack>
+          </Stack>
+        </Collapse>
+
         <Box>
           <IconButton onClick={handleOpen('mag')}>
             <SvgIcon>
@@ -94,22 +95,18 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, ratio, onCh
             </SvgIcon>
           </IconButton>
         </Box>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-          sx={{ display: open === 'mag' ? 'flex' : 'none' }}
-        >
-          <Typography>Size</Typography>
-          <TextField
-            variant="outlined"
-            value={ratio}
-            size="small"
-            onChange={handleEditRatio}
-            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-          />
-        </Stack>
+        <Collapse in={open === 'mag'} orientation="horizontal">
+          <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+            <TextField
+              label="Size"
+              variant="outlined"
+              size="small"
+              value={ratio}
+              onChange={handleEditRatio}
+              InputProps={{ endAdornment: '%' }}
+            />
+          </Stack>
+        </Collapse>
       </Stack>
     </>
   )
