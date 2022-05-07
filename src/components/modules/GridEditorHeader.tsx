@@ -38,7 +38,7 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, ratio, onCh
 
   const handleEditRatio = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const val = Number.parseInt(e.target.value)
-    console.log(val)
+
     if (val && val > 0) {
       onChangeRatio(val)
     } else {

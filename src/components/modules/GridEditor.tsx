@@ -9,6 +9,8 @@ import styles from './page.module.scss'
 import GridEditorHeader from './GridEditorHeader'
 import GridEditorMenu from './GridEditorMenu'
 
+const MAG_KEY = 'sizeMag'
+
 const Sheet = styled('section')(
   ({ ratio }: { ratio: number }) => `
   display: block;
@@ -58,7 +60,7 @@ type Props = {
 const GridEditor: React.FC<Props> = ({ contents }) => {
   const ref = React.useRef(null)
   const [matrix, setMatrix] = React.useState<Matrix>({ col: 2, row: 2 })
-  const [ratio, setRatio] = React.useState(100)
+  const [mag, setMag] = React.useState(100)
 
   const handlePrint = useReactToPrint({
     content: () => ref.current,
@@ -68,6 +70,15 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
     setMatrix(newMatrix)
   }, [])
 
+  const handleEditMag = React.useCallback((value: number) => {
+    setMag(value)
+    localStorage.setItem(MAG_KEY, value.toString())
+  }, [])
+
+  React.useEffect(() => {
+    setMag(Number.parseInt(localStorage.getItem(MAG_KEY) || '100'))
+  }, [])
+
   return (
     <>
       <Grid container justifyContent="center" alignItems="center" spacing={1} py={2}>
@@ -75,15 +86,15 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
           <GridEditorHeader
             matrix={matrix}
             onChangeMatrix={handleEditMatrix}
-            ratio={ratio}
-            onChangeRatio={setRatio}
+            ratio={mag}
+            onChangeRatio={handleEditMag}
           />
         </Grid>
         <Grid item xs={12}>
           <Stack ref={ref} alignItems="center" className={styles.container}>
             {contents &&
               sliceArray(contents, matrix.col * matrix.row).map((sliced, i) => (
-                <Sheet key={`page-${i}`} ratio={ratio / 100}>
+                <Sheet key={`page-${i}`} ratio={mag / 100}>
                   <Grid container sx={{ height: '100%', width: '100%' }}>
                     {sliced.map((content, i) => (
                       <Grid

@@ -28,13 +28,13 @@ const EditorSpeedDial: React.FC<Props> = ({ onPrint }) => {
   const actions = React.useMemo<Array<Action>>(
     () => [
       {
-        name: 'print',
+        name: 'clear',
         icon: (
           <SvgIcon>
-            <FontAwesomeIcon icon={faPrint} />
+            <FontAwesomeIcon icon={faTrash} />
           </SvgIcon>
         ),
-        action: onPrint,
+        action: handleClear,
       },
       {
         name: 'add',
@@ -50,13 +50,13 @@ const EditorSpeedDial: React.FC<Props> = ({ onPrint }) => {
         action: () => null,
       },
       {
-        name: 'clear',
+        name: 'print',
         icon: (
           <SvgIcon>
-            <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon icon={faPrint} />
           </SvgIcon>
         ),
-        action: handleClear,
+        action: onPrint,
       },
     ],
     [handleClear, onPrint]
