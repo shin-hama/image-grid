@@ -3,6 +3,12 @@
     margin: 0;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
 .sheet {
     display: block;
     width: 210mm;
@@ -15,11 +21,6 @@
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
-}
-
-.sheet_safari {
-    @extend .sheet;
-    height: 280mm;
 }
 
 html body {

@@ -6,6 +6,7 @@ import { useReactToPrint } from 'react-to-print'
 
 import styles from './page.module.scss'
 import GridEditorHeader from './GridEditorHeader'
+import GridEditorMenu from './GridEditorMenu'
 
 const sliceArray = <T extends unknown>(arr: Array<T>, length: number): Array<Array<T>> => {
   const result = []
@@ -36,37 +37,39 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
     setMatrix(newMatrix)
   }, [])
 
-  const isSafari = Object.keys(window).includes('safari')
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
-      <Grid item xs={12} className={styles.no_print}>
-        <GridEditorHeader matrix={matrix} onChangeMatrix={handleEditMatrix} onPrint={handlePrint} />
+    <>
+      <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
+        <Grid item xs={12} className={styles.no_print}>
+          <GridEditorHeader
+            matrix={matrix}
+            onChangeMatrix={handleEditMatrix}
+            onPrint={handlePrint}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Stack ref={ref} alignItems="center" className={styles.container}>
+            {contents &&
+              sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
+                <Box component="section" className={styles.sheet}>
+                  <Grid container sx={{ height: '100%', width: '100%' }}>
+                    {sliced.map((content) => (
+                      <Grid
+                        item
+                        xs={12 / matrix.col}
+                        sx={{ p: 2, height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto' }}
+                      >
+                        {content}
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              ))}
+          </Stack>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Stack ref={ref} alignItems="center" className={styles.container}>
-          {contents &&
-            sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
-              <Box
-                component="section"
-                className={isSafari ? styles.sheet_safari : styles.sheet}
-                display="block"
-              >
-                <Grid container sx={{ height: '100%' }}>
-                  {sliced.map((content) => (
-                    <Grid
-                      item
-                      xs={12 / matrix.col}
-                      sx={{ p: 2, height: `${Math.floor(100 / matrix.row)}%` }}
-                    >
-                      {content}
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            ))}
-        </Stack>
-      </Grid>
-    </Grid>
+      <GridEditorMenu onPrint={handlePrint} />
+    </>
   )
 }
 

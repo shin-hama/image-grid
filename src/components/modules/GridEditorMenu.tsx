@@ -1,39 +1,83 @@
 import * as React from 'react'
-import Divider from '@mui/material/Divider'
-import Menu, { MenuProps } from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+import SpeedDial from '@mui/material/SpeedDial'
+import SpeedDialAction from '@mui/material/SpeedDialAction'
+import SvgIcon from '@mui/material/SvgIcon'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisV, faPlus, faPrint, faTrash } from '@fortawesome/free-solid-svg-icons'
 
+import ImageUploader from './ImageUploader'
 import { useImages } from 'contexts/ImagesProvider'
 
-type Props = MenuProps & {
+type Action = {
+  name: string
+  icon: React.ReactNode
+  action: () => void
+}
+
+type Props = {
   onPrint: () => void
 }
-const GridEditorMenu: React.FC<Props> = ({ onPrint, ...props }) => {
-  const { actions } = useImages()
+const EditorSpeedDial: React.FC<Props> = ({ onPrint }) => {
+  const { actions: imageAction } = useImages()
 
-  const handlePrint = (e: React.MouseEvent) => {
-    onPrint()
-    props.onClose?.(e, 'backdropClick')
-  }
+  const handleClear = React.useCallback(() => {
+    imageAction.clear()
+  }, [imageAction])
 
-  const handleClear = () => {
-    actions.clear()
-  }
-
+  const actions = React.useMemo<Array<Action>>(
+    () => [
+      {
+        name: 'print',
+        icon: (
+          <SvgIcon>
+            <FontAwesomeIcon icon={faPrint} />
+          </SvgIcon>
+        ),
+        action: onPrint,
+      },
+      {
+        name: 'add',
+        icon: (
+          <ImageUploader>
+            <Box display="flex">
+              <SvgIcon>
+                <FontAwesomeIcon icon={faPlus} />
+              </SvgIcon>
+            </Box>
+          </ImageUploader>
+        ),
+        action: () => null,
+      },
+      {
+        name: 'clear',
+        icon: (
+          <SvgIcon>
+            <FontAwesomeIcon icon={faTrash} />
+          </SvgIcon>
+        ),
+        action: handleClear,
+      },
+    ],
+    [handleClear, onPrint]
+  )
   return (
-    <Menu
-      id="plan-menu"
-      {...props}
-      MenuListProps={{
-        'aria-labelledby': 'basic-button',
-      }}
+    <SpeedDial
+      ariaLabel="SpeedDial tooltip example"
+      sx={{ position: 'fixed', bottom: 16, right: 16 }}
+      icon={<FontAwesomeIcon icon={faEllipsisV} />}
     >
-      <MenuItem onClick={handlePrint}>印刷</MenuItem>
-      <MenuItem>サイズ変更</MenuItem>
-      <Divider />
-      <MenuItem onClick={handleClear}>画像をすべて削除</MenuItem>
-    </Menu>
+      {actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={action.icon}
+          tooltipTitle={action.name}
+          tooltipOpen
+          onClick={action.action}
+        />
+      ))}
+    </SpeedDial>
   )
 }
 
-export default GridEditorMenu
+export default EditorSpeedDial

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
@@ -8,25 +8,22 @@ import GridEditor from 'components/modules/GridEditor'
 import { useImages } from 'contexts/ImagesProvider'
 
 function Main() {
-  const { images, actions } = useImages()
-
-  const handleChange = React.useCallback(
-    (newImages: Array<string>) => {
-      actions.push(...newImages)
-    },
-    [actions]
-  )
+  const { images } = useImages()
 
   return (
     <Stack alignItems="center">
       {images.length === 0 && (
-        <Box paddingY={6}>
+        <Stack paddingY={6} alignItems="center" spacing={4}>
           <Typography component="h1" variant="h4">
             Image Grid Maker
           </Typography>
-        </Box>
+          <ImageUploader>
+            <Button variant="outlined" component="span">
+              Upload Image
+            </Button>
+          </ImageUploader>
+        </Stack>
       )}
-      <ImageUploader onChange={handleChange} fab={images.length !== 0} />
       {images.length > 0 && (
         <GridEditor
           contents={images.map((image) => (
