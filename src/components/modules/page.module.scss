@@ -6,7 +6,6 @@
 * {
     margin: 0;
     padding: 0;
-    user-select: none;
 }
 
 html body {
@@ -16,7 +15,7 @@ html body {
 
 @media print {
     html body {
-        background: black;
+        background: transparent;
         margin: 0;
     }
 

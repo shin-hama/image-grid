@@ -98,6 +98,7 @@ const GridEditorHeader: React.FC<Props> = ({ matrix, onChangeMatrix, ratio, onCh
         <Collapse in={open === 'mag'} orientation="horizontal">
           <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
             <TextField
+              id="size-form"
               label="Size"
               variant="outlined"
               size="small"

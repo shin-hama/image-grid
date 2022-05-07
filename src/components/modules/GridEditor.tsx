@@ -82,11 +82,12 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
         <Grid item xs={12}>
           <Stack ref={ref} alignItems="center" className={styles.container}>
             {contents &&
-              sliceArray(contents, matrix.col * matrix.row).map((sliced) => (
-                <Sheet ratio={ratio / 100}>
+              sliceArray(contents, matrix.col * matrix.row).map((sliced, i) => (
+                <Sheet key={`page-${i}`} ratio={ratio / 100}>
                   <Grid container sx={{ height: '100%', width: '100%' }}>
-                    {sliced.map((content) => (
+                    {sliced.map((content, i) => (
                       <Grid
+                        key={`${i % matrix.col}-${Math.floor(i / matrix.row)}`}
                         item
                         xs={12 / matrix.col}
                         sx={{ p: 2, height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto' }}
