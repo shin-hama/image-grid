@@ -14,15 +14,17 @@ function Main() {
   return (
     <>
       {images.length === 0 && (
-        <Stack paddingY={6} alignItems="center" spacing={4} mx={2}>
-          <Typography component="h1" variant="h4">
-            Collage Printer
-          </Typography>
-          <ImageUploader>
-            <Button variant="outlined" component="span">
-              Upload Image
-            </Button>
-          </ImageUploader>
+        <Stack paddingY={6} alignItems="center" spacing={8} mx={2}>
+          <Stack alignItems="center" spacing={4}>
+            <Typography component="h1" variant="h4">
+              Collage Printer
+            </Typography>
+            <ImageUploader>
+              <Button variant="outlined" component="span">
+                Upload Image
+              </Button>
+            </ImageUploader>
+          </Stack>
           <ReleaseNote />
         </Stack>
       )}
