@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Main from 'components/modules/layouts/main'
+import Main from 'components/layouts/main'
 import { ImagesProvider } from 'contexts/ImagesProvider'
 
 function App() {
