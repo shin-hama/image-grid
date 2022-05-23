@@ -15,7 +15,7 @@ function Main() {
       {images.length === 0 && (
         <Stack paddingY={6} alignItems="center" spacing={4}>
           <Typography component="h1" variant="h4">
-            Image Grid Maker
+            Collage Printer
           </Typography>
           <ImageUploader>
             <Button variant="outlined" component="span">

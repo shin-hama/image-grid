@@ -8,6 +8,7 @@ import { useReactToPrint } from 'react-to-print'
 import styles from './page.module.scss'
 import GridEditorHeader from './GridEditorHeader'
 import GridEditorMenu from './GridEditorMenu'
+import ImageCell from './ImageCell'
 
 const MAG_KEY = 'sizeMag'
 
@@ -103,7 +104,7 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
                         xs={12 / matrix.col}
                         sx={{ height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto', p: 1 }}
                       >
-                        {content}
+                        <ImageCell>{content}</ImageCell>
                       </Grid>
                     ))}
                   </Grid>
