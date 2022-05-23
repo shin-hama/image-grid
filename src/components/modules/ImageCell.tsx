@@ -6,13 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useClickAway } from 'react-use'
 
+import { useImages } from 'contexts/ImagesProvider'
+
 type Props = {
-  children: React.ReactNode
+  image: string
 }
-const ImageCell: React.FC<Props> = ({ children }) => {
+const ImageCell: React.FC<Props> = ({ image }) => {
   const [open, setOpen] = React.useState(false)
   const boxRef = React.useRef<HTMLDivElement>(null)
   useClickAway(boxRef, () => setOpen(false))
+
+  const { actions } = useImages()
+
+  const handleRemove = () => {
+    setOpen(false)
+    actions.filter((item) => item !== image)
+  }
+
   return (
     <Box
       ref={boxRef}
@@ -26,14 +36,14 @@ const ImageCell: React.FC<Props> = ({ children }) => {
     >
       {open && (
         <Box position="absolute" top={1} right={1}>
-          <IconButton>
+          <IconButton onClick={handleRemove}>
             <SvgIcon>
               <FontAwesomeIcon icon={faTrash} />
             </SvgIcon>
           </IconButton>
         </Box>
       )}
-      {children}
+      <img src={image} alt="test" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
     </Box>
   )
 }

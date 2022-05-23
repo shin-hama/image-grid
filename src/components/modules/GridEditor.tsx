@@ -9,6 +9,7 @@ import styles from './page.module.scss'
 import GridEditorHeader from './GridEditorHeader'
 import GridEditorMenu from './GridEditorMenu'
 import ImageCell from './ImageCell'
+import { useImages } from 'contexts/ImagesProvider'
 
 const MAG_KEY = 'sizeMag'
 
@@ -55,13 +56,12 @@ export type Matrix = {
   col: number
   row: number
 }
-type Props = {
-  contents?: Array<React.ReactNode>
-}
-const GridEditor: React.FC<Props> = ({ contents }) => {
+
+const GridEditor = () => {
   const ref = React.useRef(null)
   const [matrix, setMatrix] = React.useState<Matrix>({ col: 2, row: 2 })
   const [mag, setMag] = React.useState(100)
+  const { images } = useImages()
 
   const handlePrint = useReactToPrint({
     content: () => ref.current,
@@ -93,23 +93,22 @@ const GridEditor: React.FC<Props> = ({ contents }) => {
         </Grid>
         <Grid item xs={12}>
           <Stack ref={ref} alignItems="center" className={styles.container}>
-            {contents &&
-              sliceArray(contents, matrix.col * matrix.row).map((sliced, i) => (
-                <Sheet key={`page-${i}`} ratio={mag / 100}>
-                  <Grid container sx={{ height: '100%', width: '100%' }}>
-                    {sliced.map((content, i) => (
-                      <Grid
-                        key={`${i % matrix.col}-${Math.floor(i / matrix.row)}`}
-                        item
-                        xs={12 / matrix.col}
-                        sx={{ height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto', p: 1 }}
-                      >
-                        <ImageCell>{content}</ImageCell>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Sheet>
-              ))}
+            {sliceArray(images, matrix.col * matrix.row).map((sliced, i) => (
+              <Sheet key={`page-${i}`} ratio={mag / 100}>
+                <Grid container sx={{ height: '100%', width: '100%' }}>
+                  {sliced.map((image, i) => (
+                    <Grid
+                      key={`${i % matrix.col}-${Math.floor(i / matrix.row)}`}
+                      item
+                      xs={12 / matrix.col}
+                      sx={{ height: `${Math.floor(100 / matrix.row)}%`, mx: 'auto', p: 1 }}
+                    >
+                      <ImageCell image={image} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Sheet>
+            ))}
           </Stack>
         </Grid>
       </Grid>

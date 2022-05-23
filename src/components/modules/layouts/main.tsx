@@ -26,14 +26,6 @@ function Main() {
       )}
       {images.length > 0 && (
         <GridEditor
-          contents={images.map((image) => (
-            <img
-              key={image}
-              src={image}
-              alt="test"
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            />
-          ))}
         />
       )}
     </Stack>
